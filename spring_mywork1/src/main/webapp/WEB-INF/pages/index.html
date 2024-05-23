@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+</head>
+<body>
+<h1>首页 - spring_mywork1</h1>
+<!--<button type="button" onclick="insert()">测试</button>-->
+</body>
+<script th:src="@{'/static/axios@1.6.8.min.js'}"></script>
+<script>
+    // 在js中可以在两个中括号例如[[@{/}]]中使用thymeleaf语法，会自动填充
+    // 注：但不能直接只写两个中括号（包括注释中，会报错，每错，连注释也会填充）
+    const insert = async (formData) => {
+        // 发起一个put请求
+        const res = await axios({
+            method: 'put',
+            url: '[[@{/emp/add}]]',
+            data: {
+                empId: '',
+                eName: ''
+            }
+        });
+        console.log(res)
+    }
+</script>
+</html>

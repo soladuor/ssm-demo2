@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.soladuor.mapper.FileCommentMapper">
+    <resultMap id="BaseResultMap" type="com.soladuor.pojo.FileComment">
+        <!--  -->
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="file_id" jdbcType="VARCHAR" property="fileId"/>
+        <result column="message" jdbcType="VARCHAR" property="message"/>
+    </resultMap>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        <!--  -->
+        DELETE FROM ssm_lab1_file_comment
+        WHERE id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.soladuor.pojo.FileComment">
+        <!--  -->
+        INSERT INTO ssm_lab1_file_comment (id, file_id, message
+        )
+        VALUES (#{id,jdbcType=INTEGER}, #{fileId,jdbcType=VARCHAR}, #{message,jdbcType=VARCHAR}
+        )
+    </insert>
+    <update id="updateByPrimaryKey" parameterType="com.soladuor.pojo.FileComment">
+        <!--  -->
+        UPDATE ssm_lab1_file_comment
+        SET file_id = #{fileId,jdbcType=VARCHAR},
+        message = #{message,jdbcType=VARCHAR}
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        <!--  -->
+        SELECT id, file_id, message
+        FROM ssm_lab1_file_comment
+        WHERE id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+        <!--  -->
+        SELECT id, file_id, message
+        FROM ssm_lab1_file_comment
+    </select>
+</mapper>

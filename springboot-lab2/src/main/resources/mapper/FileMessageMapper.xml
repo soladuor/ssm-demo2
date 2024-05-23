@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.soladuor.mapper.FileMessageMapper">
+    <resultMap id="BaseResultMap" type="com.soladuor.pojo.FileMessage">
+        <!--  -->
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="space_id" jdbcType="INTEGER" property="spaceId"/>
+        <result column="file_name" jdbcType="VARCHAR" property="fileName"/>
+        <result column="file_path" jdbcType="VARCHAR" property="filePath"/>
+        <result column="uploader_id" jdbcType="INTEGER" property="uploaderId"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="file_size" jdbcType="DOUBLE" property="fileSize"/>
+        <result column="download_count" jdbcType="INTEGER" property="downloadCount"/>
+        <!-- 分步查询的 select、column和懒加载 与 association 一样 -->
+        <collection property="fileType"
+                    select="com.soladuor.mapper.FileTypeMapper.selectByPrimaryKey"
+                    column="type_id"
+                    ofType="com.soladuor.pojo.FileType">
+            <id property="id" column="id"/>
+            <id property="typeName" column="type_name"/>
+        </collection>
+    </resultMap>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        <!--  -->
+        DELETE FROM ssm_lab1_file_message
+        WHERE id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.soladuor.pojo.FileMessage">
+        <!--  -->
+        INSERT INTO ssm_lab1_file_message (id, space_id, file_name,
+        file_path, uploader_id, update_time,
+        file_size, download_count, type_id
+        )
+        VALUES (#{id,jdbcType=VARCHAR}, #{spaceId,jdbcType=INTEGER}, #{fileName,jdbcType=VARCHAR},
+        #{filePath,jdbcType=VARCHAR}, #{uploaderId,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP},
+        #{fileSize,jdbcType=DOUBLE}, #{downloadCount,jdbcType=INTEGER}, #{fileType.id,jdbcType=INTEGER}
+        )
+    </insert>
+    <update id="updateByPrimaryKey" parameterType="com.soladuor.pojo.FileMessage">
+        <!--  -->
+        UPDATE ssm_lab1_file_message
+        SET space_id = #{spaceId,jdbcType=INTEGER},
+        file_name = #{fileName,jdbcType=VARCHAR},
+        file_path = #{filePath,jdbcType=VARCHAR},
+        uploader_id = #{uploaderId,jdbcType=INTEGER},
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+        file_size = #{fileSize,jdbcType=DOUBLE},
+        download_count = #{downloadCount,jdbcType=INTEGER},
+        type_id = #{typeId,jdbcType=INTEGER}
+        WHERE id = #{id,jdbcType=VARCHAR}
+    </update>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        <!--  -->
+        SELECT id, space_id, file_name, file_path, uploader_id, update_time, file_size, download_count,
+        type_id
+        FROM ssm_lab1_file_message
+        WHERE id = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        <!--  -->
+        SELECT id, space_id, file_name, file_path, uploader_id, update_time, file_size, download_count,
+        type_id
+        FROM ssm_lab1_file_message
+    </select>
+</mapper>
